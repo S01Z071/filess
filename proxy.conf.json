@@ -1,0 +1,7 @@
+{
+  "/ocr/api/v1": {
+    "target": "https://app-test.sodisce.si",
+    "secure": true,
+    "changeOrigin": true
+  }
+}

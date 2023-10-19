@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>si.vsrs.cif</groupId>
+        <artifactId>ocr</artifactId>
+        <version>0.0.3-SNAPSHOT</version>
+    </parent>
+    <groupId>si.vsrs.cif</groupId>
+    <artifactId>ocr-ui</artifactId>
+    <version>0.0.3-SNAPSHOT</version>
+    <name>ocr-ui</name>
+    <description>CIF OCR UI</description>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/target/dist/</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.13.4</version>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <!-- See https://nodejs.org/en/download/ for latest node and npm (lts) versions -->
+                            <nodeVersion>v16.16.0</nodeVersion>
+                            <npmVersion>8.5.4</npmVersion>
+                        </configuration>
+                    </execution>
+                    <!--execution>
+                        <id>set npm cacert files</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>config set cafile cacert/cacert.pem</arguments>
+                        </configuration>
+                    </execution-->
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <!-- Optional configuration which provides for running any npm command -->
+                        <configuration>
+                            <arguments>install</arguments>
+                            <npmInheritsProxyConfigFromMaven>true</npmInheritsProxyConfigFromMaven>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>sync version to package.json</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run sync-pom-version -- --prerelease-suffix=.${BUILD_NUMBER}</arguments>
+                            <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>npm run build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <arguments>run build</arguments>
+                            <npmInheritsProxyConfigFromMaven>true</npmInheritsProxyConfigFromMaven>
+                        </configuration>
+                    </execution>
+                    <!--execution>
+                        <id>npm run test</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <arguments>run test</arguments>
+                            <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
+                        </configuration>
+                    </execution-->
+                </executions>
+                <configuration>
+                    <!-- kako rešiti nodejs? -->
+                    <!--nodeDownloadRoot>http://myproxy.example.org/nodejs/</nodeDownloadRoot-->
+                    <!--npmDownloadRoot>https://nexus.sodisce.si/repository/npm-public/</npmDownloadRoot-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>none</phase>
+                        <configuration>
+                            <finalName>unwanted</finalName>
+                            <classifier>unwanted</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <finalName>${project.name}-${project.version}-${env.BUILD_NUMBER}</finalName>
+                    <descriptors>
+                        <descriptor>assembly-zip.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

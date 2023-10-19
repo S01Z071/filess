@@ -1,0 +1,73 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+
+<!-- Toolbar -->
+
+<div class="content-wrapper">
+
+    <!-- header -->
+    <div class="header">
+        <a href="https://sodisce.si">
+            <img id="logo" src="assets/sodstvo-logo.svg" alt="Sodstvo Republike Slovenije">
+        </a>
+    </div>
+
+
+
+    <div class="field1">
+        <h1 class="naslov">Optična Prepoznava Teksta</h1>
+    </div>
+
+
+    <div class="field3">
+        <span class="div-image" data-hover="Pripnete samo skenirane PDF datoteke!."><img class="alert-img" src="./assets/alert.svg" width="40px" height="40px" ></span>
+        <label class="file-label" for="file">
+            <span class="file-button">Izberi Datoteko</span>
+            <input class="file-field" id="file" type="file" (change)="onFileChange($event)" multiple accept=".pdf" >
+        </label>
+
+            <div *ngFor="let file of selectedFiles; let index = index" class="ss">
+                {{ file.name }}
+                <button class="r-button" (click)="removeFile(index)">Izbriši</button>
+            </div>
+    </div>
+
+
+
+    <div class="field2">
+        <label id="email-label" for="email">Prejemnik:</label>
+        <input class="email-field" id="email" [(ngModel)]="email" placeholder="samo @sodisce.si">
+        <button class="send-button" (click)="sendFile()">Pošlji</button>
+        <!-- <p class="sent-message" id="s-button" #sentTag *ngIf="isSent">Sent</p> -->
+    </div>
+
+
+</div>
+
+
+<!-- footer -->
+<div class="footer">
+  <a href="https://sodisce.si/vsrs/">
+    <img id="logo-vsrs" src="assets/vsrs-logo-bel.svg" alt="Vrhovno sodišče Republike Slovenije">
+  </a>
+  <!-- <p class="version"> verzija: {{ version }} </p> -->
+  <p class="version">verzija: {{ version }} </p>
+</div>
+
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<router-outlet></router-outlet>
